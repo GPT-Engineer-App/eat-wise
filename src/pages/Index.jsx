@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import { Box, Heading, Text, Input, Stack, Button, Container, VStack, HStack, IconButton, useToast } from "@chakra-ui/react";
+import React, { useState, useMemo } from "react";
+import { Box, Heading, Text, Input, Stack, Container, VStack, HStack, IconButton, useToast } from "@chakra-ui/react";
+import RecentlyUsedFoods from "../components/RecentlyUsedFoods";
 import { FaTrash, FaPlus } from "react-icons/fa";
 
 const Index = () => {
@@ -37,7 +38,12 @@ const Index = () => {
         <Heading>Calorie Tracker</Heading>
         <Text>Keep track of your calorie intake.</Text>
 
-        <HStack as="form" onSubmit={(e) => e.preventDefault()} width="full">
+        <Box width="full" mb={4}>
+          <Text mb={2}>Recently Used Foods:</Text>
+          <RecentlyUsedFoods items={items.slice(-5)} onRemove={(index) => handleDeleteItem(items.length - 5 + index)} />
+        </Box>
+
+        <HStack as="form" onSubmit={(e) => e.preventDefault()} width="full" pt={4}>
           <Input placeholder="Food item" value={food} onChange={(e) => setFood(e.target.value)} />
           <Input placeholder="Calories" type="number" value={calories} onChange={(e) => setCalories(e.target.value)} />
           <IconButton aria-label="Add food item" icon={<FaPlus />} onClick={handleAddItem} />
